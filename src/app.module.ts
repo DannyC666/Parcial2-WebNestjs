@@ -4,9 +4,17 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ExampleModule } from './example/example.module';
 import { ExampleEntity } from './example/example.entity';
+import { EstudianteModule } from './estudiante/estudiante.module';
+import { ProyectoModule } from './proyecto/proyecto.module';
+import { ProfesorModule } from './profesor/profesor.module';
+import { EvaluacionModule } from './evaluacion/evaluacion.module';
 
 @Module({
   imports: [
+    EstudianteModule,
+    ProyectoModule,
+    ProfesorModule,
+    EvaluacionModule,
     ExampleModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -20,6 +28,10 @@ import { ExampleEntity } from './example/example.entity';
       synchronize: true,
       // keepConnectionAlive: true
     }),
+    EstudianteModule,
+    ProyectoModule,
+    ProfesorModule,
+    EvaluacionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
