@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "07a3df53-c577-4440-ab6e-d253763aae98",
+		"name": "Evaluacion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44552292",
+		"_collection_link": "https://danny-9167465.postman.co/workspace/Danny's-Workspace~377fc743-cc8a-44e3-86af-674f8277bc1f/collection/44552292-07a3df53-c577-4440-ab6e-d253763aae98?action=share&source=collection_link&creator=44552292"
+	},
+	"item": [
+		{
+			"name": "Crear evaluacion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 (Created)\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Body contiene los campos esperados\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"id\");",
+							"    pm.expect(jsonData).to.have.property(\"calificacion\", 4);",
+							"    pm.expect(jsonData).to.have.property(\"proyecto\");",
+							"    pm.expect(jsonData.proyecto).to.have.property(\"id\", 1);",
+							"    pm.expect(jsonData).to.have.property(\"evaluador\");",
+							"    pm.expect(jsonData.evaluador).to.have.property(\"id\", 1);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"calificacion\": 4,\n  \"proyectoId\": 1,\n  \"evaluadorId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/evaluaciones",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"evaluaciones"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear evaluacion",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"calificacion\": 4,\n  \"proyectoId\": 1,\n  \"evaluadorId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/evaluaciones",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"evaluaciones"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"id\": 1,\n  \"calificacion\": 4,\n  \"proyecto\": {\n    \"id\": 1\n  },\n  \"evaluador\": {\n    \"id\": 1\n  }\n}"
+				}
+			]
+		},
+		{
+			"name": "Crear evaluacion invalida",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400 (Bad Request)\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Mensaje de error apropiado\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"message\", \"El evaluador no puede ser el mismo que el mentor.\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"calificacion\": 4,\n  \"proyectoId\": 2,\n  \"evaluadorId\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/evaluaciones",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"evaluaciones"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear evaluacion invalida",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"calificacion\": 4,\n  \"proyectoId\": 2,\n  \"evaluadorId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/evaluaciones",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"evaluaciones"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"message\": \"El evaluador no puede ser el mismo que el mentor.\"\n}"
+				}
+			]
+		}
+	]
+}

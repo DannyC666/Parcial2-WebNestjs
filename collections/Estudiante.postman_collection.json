@@ -1,0 +1,197 @@
+{
+	"info": {
+		"_postman_id": "99e27e2a-9b68-4a82-91f1-353535c2ef70",
+		"name": "Estudiante",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44552292",
+		"_collection_link": "https://danny-9167465.postman.co/workspace/Danny's-Workspace~377fc743-cc8a-44e3-86af-674f8277bc1f/collection/44552292-99e27e2a-9b68-4a82-91f1-353535c2ef70?action=share&source=collection_link&creator=44552292"
+	},
+	"item": [
+		{
+			"name": "Crear estudiante",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+					"type": "text/javascript",
+					"exec": [
+						"var data = pm.response.json();",
+						"",
+						"// Guardar el ID del nuevo estudiante",
+						"pm.globals.set(\"estudiante_id\", data.id);",
+						"",
+						"pm.test(\"Status code is 201\", function () {",
+						"    pm.response.to.have.status(201);",
+						"});",
+						"",
+						"pm.test(\"Response has expected properties\", function () {",
+						"    pm.expect(data).to.have.property(\"id\");",
+						"    pm.expect(data).to.have.property(\"cedula\", 123456);",
+						"    pm.expect(data).to.have.property(\"nombre\", \"Juan Pérez\");",
+						"    pm.expect(data).to.have.property(\"semestre\", 5);",
+						"    pm.expect(data).to.have.property(\"programa\", \"Ingeniería de Sistemas\");",
+						"    pm.expect(data).to.have.property(\"promedio\");",
+						"});"
+					]
+					}
+				}
+				],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"cedula\": 123456,\n  \"nombre\": \"Juan Pérez\",\n  \"semestre\": 5,\n  \"programa\": \"Ingeniería de Sistemas\",\n  \"promedio\": 5\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/estudiantes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"estudiantes"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear estudiante",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+							"type": "text/javascript",
+							"exec": [
+								"pm.test(\"Status code is 204 (No Content)\", function () {",
+								"    pm.response.to.have.status(204);",
+								"});",
+								"",
+								"pm.test(\"Response body should be empty\", function () {",
+								"    pm.expect(pm.response.text()).to.be.empty;",
+								"});"
+							]
+							}
+						}
+					],
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cedula\": 123456,\n  \"nombre\": \"Juan Pérez\",\n  \"semestre\": 5,\n  \"programa\": \"Ingeniería de Sistemas\",\n  \"promedio\": 3.5\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/estudiantes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"estudiantes"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"id\": 1,\n  \"cedula\": 123456,\n  \"nombre\": \"Juan Pérez\",\n  \"semestre\": 5,\n  \"programa\": \"Ingeniería de Sistemas\",\n  \"promedio\": 3.5\n}"
+				}
+			]
+		},
+		{
+			"name": "Eliminar estudiante",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/estudiantes/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"estudiantes",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Eliminar estudiante",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/estudiantes/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"estudiantes",
+								"1"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Eliminar con proyectos activos",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/estudiantes/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"estudiantes",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Eliminar con proyectos activos",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/estudiantes/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"estudiantes",
+								"1"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"message\": \"No se puede eliminar el estudiante porque tiene proyectos activos.\"\n}"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,354 @@
+{
+	"info": {
+		"_postman_id": "01967e02-5306-4113-a290-a29071b175da",
+		"name": "Proyecto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44552292",
+		"_collection_link": "https://danny-9167465.postman.co/workspace/Danny's-Workspace~377fc743-cc8a-44e3-86af-674f8277bc1f/collection/44552292-01967e02-5306-4113-a290-a29071b175da?action=share&source=collection_link&creator=44552292"
+	},
+	"item": [
+		{
+			"name": "Crear proyecto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 or 200\", function () {",
+							"    pm.response.to.have.status.oneOf([201, 200]);",
+							"});",
+							"",
+							"pm.test(\"El cuerpo tiene campos del proyecto\", function () {",
+							"    const json = pm.response.json();",
+							"    pm.expect(json).to.have.property(\"id\");",
+							"    pm.expect(json).to.have.property(\"titulo\");",
+							"    pm.expect(json).to.have.property(\"area\");",
+							"    pm.expect(json).to.have.property(\"presupuesto\");",
+							"    pm.expect(json).to.have.property(\"estado\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"titulo\": \"Sistema de Control de Tráfico Inteligente\",\n  \"area\": \"IA\",\n  \"presupuesto\": 10000000,\n  \"notaFinal\": 0,\n  \"estado\": 0,\n  \"fechaInicio\": \"2025-05-01\",\n  \"fechaFin\": \"2025-10-01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/proyectos",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"proyectos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear proyecto",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"titulo\": \"Sistema de Control de Tráfico Inteligente\",\n  \"area\": \"IA\",\n  \"presupuesto\": 10000000,\n  \"notaFinal\": 0,\n  \"estado\": 0,\n  \"fechaInicio\": \"2025-05-01\",\n  \"fechaFin\": \"2025-10-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/proyectos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"proyectos"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"id\": 1,\n  \"titulo\": \"Sistema de Control de Tráfico Inteligente\",\n  \"area\": \"IA\",\n  \"presupuesto\": 10000000,\n  \"notaFinal\": 0,\n  \"estado\": 0,\n  \"fechaInicio\": \"2025-05-01\",\n  \"fechaFin\": \"2025-10-01\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Crear Proyecto invalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Mensaje de error válido\", function () {",
+							"    const json = pm.response.json();",
+							"    pm.expect(json).to.have.property(\"message\");",
+							"    pm.expect(json.message).to.include(\"presupuesto\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"titulo\": \"Sistema\",\n  \"area\": \"IA\",\n  \"presupuesto\": -10,\n  \"notaFinal\": 0,\n  \"estado\": 0,\n  \"fechaInicio\": \"2025-05-01\",\n  \"fechaFin\": \"2025-10-01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/proyectos",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"proyectos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear Proyecto invalido",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"titulo\": \"Sistema\",\n  \"area\": \"IA\",\n  \"presupuesto\": -10,\n  \"notaFinal\": 0,\n  \"estado\": 0,\n  \"fechaInicio\": \"2025-05-01\",\n  \"fechaFin\": \"2025-10-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/proyectos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"proyectos"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"message\": \"El presupuesto debe ser mayor a 0 y el título mayor a 15 caracteres.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Avanzar estado del proyecto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Mensaje de éxito recibido\", function () {",
+							"    const json = pm.response.json();",
+							"    pm.expect(json.message).to.include(\"Estado del proyecto actualizado\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/proyectos/1/avanzar",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"proyectos",
+						"1",
+						"avanzar"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Avanzar estado del proyecto",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/proyectos/1/avanzar",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"proyectos",
+								"1",
+								"avanzar"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"message\": \"Estado del proyecto actualizado a 1\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Avanzar Proyecto en estado máximo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Mensaje indica estado máximo alcanzado\", function () {",
+							"    const json = pm.response.json();",
+							"    pm.expect(json.message).to.include(\"estado máximo permitido\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "/proyectos/1/avanzar",
+					"path": [
+						"proyectos",
+						"1",
+						"avanzar"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Avanzar Proyecto en estado máximo",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "/proyectos/1/avanzar",
+							"path": [
+								"proyectos",
+								"1",
+								"avanzar"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"message\": \"El proyecto ya alcanzó el estado máximo permitido (4).\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener estudiantes del proyecto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Lista de estudiantes válida\", function () {",
+							"    const json = pm.response.json();",
+							"    pm.expect(json).to.be.an(\"array\");",
+							"    if (json.length > 0) {",
+							"        pm.expect(json[0]).to.have.property(\"id\");",
+							"        pm.expect(json[0]).to.have.property(\"nombre\");",
+							"        pm.expect(json[0]).to.have.property(\"cedula\");",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/proyectos/1/estudiantes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"proyectos",
+						"1",
+						"estudiantes"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener estudiantes del proyecto",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/proyectos/1/estudiantes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"proyectos",
+								"1",
+								"estudiantes"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "[\n  {\n  \"id\": 1,\n  \"cedula\": 123456,\n  \"nombre\": \"Juan Pérez\",\n  \"semestre\": 5,\n  \"programa\": \"Ingeniería de Sistemas\",\n  \"promedio\": 3.5\n}\n]\n"
+				}
+			]
+		}
+	]
+}

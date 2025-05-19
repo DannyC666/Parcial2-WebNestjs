@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "954a9877-fd68-4e2b-8a8d-186e0c9ba135",
+		"name": "Profesor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44552292",
+		"_collection_link": "https://danny-9167465.postman.co/workspace/Danny's-Workspace~377fc743-cc8a-44e3-86af-674f8277bc1f/collection/44552292-954a9877-fd68-4e2b-8a8d-186e0c9ba135?action=share&source=collection_link&creator=44552292"
+	},
+	"item": [
+		{
+			"name": "Crear profesor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Código de estado 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"El cuerpo de la respuesta contiene los datos esperados\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"id\");",
+							"    pm.expect(jsonData.cedula).to.eql(789123);",
+							"    pm.expect(jsonData.nombre).to.eql(\"Ana Torres\");",
+							"    pm.expect(jsonData.departamento).to.eql(\"Ciencias Básicas\");",
+							"    pm.expect(jsonData.extension).to.eql(12345);",
+							"    pm.expect(jsonData.esParEvaluador).to.eql(false);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"cedula\": 789123,\n  \"nombre\": \"Ana Torres\",\n  \"departamento\": \"Ciencias Básicas\",\n  \"extension\": 12345,\n  \"esParEvaluador\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/profesores",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"profesores"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear profesor",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cedula\": 789123,\n  \"nombre\": \"Ana Torres\",\n  \"departamento\": \"Ciencias Básicas\",\n  \"extension\": 12345,\n  \"esParEvaluador\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/profesores",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"profesores"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"id\": 1,\n  \"cedula\": 789123,\n  \"nombre\": \"Ana Torres\",\n  \"departamento\": \"Ciencias Básicas\",\n  \"extension\": 12345,\n  \"esParEvaluador\": false\n}"
+				}
+			]
+		},
+		{
+			"name": "Crear profesor con extension invalida",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Código de estado 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"El mensaje de error es correcto\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"La extensión debe tener exactamente 5 dígitos.\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"cedula\": 789123,\n  \"nombre\": \"Ana Torres\",\n  \"departamento\": \"Ciencias Básicas\",\n  \"extension\": 3298474,\n  \"esParEvaluador\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/profesores",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"profesores"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear profesor con extension invalida",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cedula\": 789123,\n  \"nombre\": \"Ana Torres\",\n  \"departamento\": \"Ciencias Básicas\",\n  \"extension\": 3298474,\n  \"esParEvaluador\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/profesores",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"profesores"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"message\": \"La extensión debe tener exactamente 5 dígitos.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Asignar como evaluador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Código de estado 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Mensaje de confirmación correcto\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"Profesor asignado como par evaluador.\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/profesores/1/asignar-evaluador",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"profesores",
+						"1",
+						"asignar-evaluador"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Asignar como evaluador",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/profesores/1/asignar-evaluador",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"profesores",
+								"1",
+								"asignar-evaluador"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"message\": \"Profesor asignado como par evaluador.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "profesor con más de 3 evaluaciones",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Código de estado 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Mensaje de advertencia correcto\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"El profesor ya tiene 3 evaluaciones activas.\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/profesores/1/asignar-evaluador",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"profesores",
+						"1",
+						"asignar-evaluador"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "profesor con más de 3 evaluaciones",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/profesores/1/asignar-evaluador",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"profesores",
+								"1",
+								"asignar-evaluador"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"message\": \"El profesor ya tiene 3 evaluaciones activas.\"\n}"
+				}
+			]
+		}
+	]
+}
